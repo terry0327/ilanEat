@@ -1,5 +1,5 @@
 # ilanEat
-期末小專題
+目的是為了幫助有選擇障礙的人選擇三餐要吃什麼
 
 # Demo
 Click to watch demo  
