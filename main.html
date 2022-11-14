@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>今晚我想來點</title>
+  <script src="js/jquery-2.2.3.min.js"></script>
+  <script src="js/jquery.params.js"></script>
+  <style>
+    @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css);
+
+    html {
+      height: 100vh;
+    }
+
+    body {
+      background-image: url(images/background.jpg);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h1 {
+      background-image: url(images/wood2.png);
+      background-position: center;
+      background-size: cover;
+      border-radius: 30px;
+      margin: 0 auto;
+      width: 1000px;
+      height: 200px;
+      font-size: 130px;
+      font-family: fantasy;
+      color: rgb(70, 0, 0);
+
+    }
+
+    .content {
+      margin-top: 80px;
+      text-align: center;
+    }
+
+    .content .wrap {
+      margin-top: 15px;
+      display: flex;
+    }
+
+    .content h1 {
+      margin: 0 auto;
+    }
+
+    .content .choose {
+      background-image: url(images/wood.jpg);
+      background-position: center;
+      background-size: 100px;
+      display: block;
+      margin: 30px auto;
+      padding: 25px;
+      font-size: 35px;
+      font-weight: bolder;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .content .exit {
+      display: block;
+      margin: 50px auto;
+      padding: 25px;
+      font-size: 35px;
+      background-color: sandybrown;
+      font-weight: bolder;
+      border-radius: 60px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .content .choose:hover {
+      padding: 35px;
+      border-radius: 80px;
+      background-color: #2ecc71;
+      transition: 1s;
+    }
+
+    .content .exit:hover {
+      background-color: rgb(250, 56, 56);
+      transition: 0.5s;
+    }
+  </style>
+  <script>
+    function btn1() {
+      choose = 1;
+      url = "select.html?name=" + choose;//此處拼接內容
+      window.location.href = url;
+    }
+    function btn2() {
+      choose = 2;
+      url = "select.html?name=" + choose;//此處拼接內容
+      window.location.href = url;
+    }
+    function btn3() {
+      choose = 3;
+      url = "select.html?name=" + choose;//此處拼接內容
+      window.location.href = url;
+    }
+
+  </script>
+</head>
+
+<body>
+  <div class="content">
+    <h1>今晚我想來點</h1>><br>
+    <div class="wrap">
+      <input class="choose" type="button" onClick="btn1()" id="1" value="經典">
+      <input class="choose" type="button" onClick="btn2()" id="2" value="二選一">
+      <input class="choose" type="button" onClick="btn3()" id="3" value="轉盤">
+    </div>
+    <input class="exit" type="button" value="結束">
+  </div>
+</body>
+
+</html>

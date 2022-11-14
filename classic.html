@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>經典模式</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+              rel="stylesheet" 
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+              crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+                crossorigin="anonymous">
+        </script>
+        <!--引入事件类-->
+        <link rel="stylesheet" href="style/classic.css">
+    </head>
+
+    <body>
+        <!-- 標題 -->
+        <div class="titleBar">
+            <!-- <h1>今晚我想來點</h1> -->
+        </div>
+
+        <!-- 店家Card -->
+        <div class="container">
+            <div class="row justify-content-center align-items-center col-sm-6 col-md-12">
+                <div class="card border-warning" style="width: 300px">
+                    <!-- 輪播 -->
+                    <div id="myCarousel1" class="carousel slide" data-bs-ride="carousel">
+                        <!-- 輪播指示 -->
+                        <ol class="carousel-indicators">
+                        <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+                        <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
+                        </ol>
+                        <!-- 輪播內容 -->
+                        <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img id="card1_img1" src="images/tour2.jpg" class="d-block w-100 card_img" alt="合掌村">
+                            <div class="carousel-caption d-none d-md-block">
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img id="card1_img2" src="images/tour3.jpg" class="d-block w-100 card_img" alt="布拉格">
+                            <div class="carousel-caption d-none d-md-block">
+                            </div>
+                        </div>
+                        </div>
+                        <!-- 輪播控制 -->
+                        <a class="carousel-control-prev" href="#myCarousel1" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                        <span class="visually-hidden">Previous</span></a>
+                        <a class="carousel-control-next" href="#myCarousel1" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                        <span class="visually-hidden">Next</span></a>
+                    </div>
+                    <div class="card-body">
+                        <h4 id="card1" class="card-title">暑假暢遊迪士尼</h5>
+                        <!-- <p class="card-text">英姿颯爽的太陽花在盛夏的艷陽下綻放…！</p> -->
+                    </div>
+                </div>
+                
+                <div class="card border-warning" style="width: 300px">
+                    <!-- 輪播 -->
+                    <div id="myCarousel2" class="carousel slide" data-bs-ride="carousel">
+                        <!-- 輪播指示 -->
+                        <ol class="carousel-indicators">
+                        <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+                        <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
+                        </ol>
+                        <!-- 輪播內容 -->
+                        <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img id="card2_img1" src="images/tour2.jpg" class="d-block w-100 card_img" alt="合掌村">
+                            <div class="carousel-caption d-none d-md-block">
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img id="card2_img2" src="images/tour3.jpg" class="d-block w-100 card_img" alt="布拉格">
+                            <div class="carousel-caption d-none d-md-block">
+                            </div>
+                        </div>
+                        </div>
+                        <!-- 輪播控制 -->
+                        <a class="carousel-control-prev" href="#myCarousel2" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                        <span class="visually-hidden">Previous</span></a>
+                        <a class="carousel-control-next" href="#myCarousel2" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                        <span class="visually-hidden">Next</span></a>
+                    </div>
+                    <div class="card-body">
+                        <h4 id="card2" class="card-title">純淨瑞士深呼吸</h5>
+                        <!-- <p class="card-text">英姿颯爽的太陽花在盛夏的艷陽下綻放…！</p> -->
+                    </div>
+                </div>
+
+                <div class="card border-warning" style="width: 300px">
+                    <!-- 輪播 -->
+                    <div id="myCarousel3" class="carousel slide" data-bs-ride="carousel">
+                        <!-- 輪播指示 -->
+                        <ol class="carousel-indicators">
+                        <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+                        <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
+                        </ol>
+                        <!-- 輪播內容 -->
+                        <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img id="card3_img1" src="images/tour2.jpg" class="d-block w-100 card_img" alt="合掌村">
+                            <div class="carousel-caption d-none d-md-block">
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img id="card3_img2" src="images/tour3.jpg" class="d-block w-100 card_img" alt="布拉格">
+                            <div class="carousel-caption d-none d-md-block">
+                            </div>
+                        </div>
+                        </div>
+                        <!-- 輪播控制 -->
+                        <a class="carousel-control-prev" href="#myCarousel3" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                        <span class="visually-hidden">Previous</span></a>
+                        <a class="carousel-control-next" href="#myCarousel3" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                        <span class="visually-hidden">Next</span></a>
+                    </div>
+                    <div class="card-body">
+                        <h4 id="card3" class="card-title">九州鐵道旅行</h5>
+                        <!-- <p class="card-text">英姿颯爽的太陽花在盛夏的艷陽下綻放…！</p> -->
+                    </div>
+                </div>
+
+                <div class="card border-warning " style="width: 300px">
+                    <!-- 輪播 -->
+                    <div id="myCarousel4" class="carousel slide" data-bs-ride="carousel">
+                        <!-- 輪播指示 -->
+                        <ol class="carousel-indicators">
+                        <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+                        <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
+                        </ol>
+                        <!-- 輪播內容 -->
+                        <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img id="card4_img1" src="images/tour2.jpg" class="d-block w-100 card_img" alt="合掌村">
+                            <div class="carousel-caption d-none d-md-block">
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img id="card4_img2" src="images/tour3.jpg" class="d-block w-100 card_img" alt="布拉格">
+                            <div class="carousel-caption d-none d-md-block">
+                            </div>
+                        </div>
+                        </div>
+                        <!-- 輪播控制 -->
+                        <a class="carousel-control-prev" href="#myCarousel4" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                        <span class="visually-hidden">Previous</span></a>
+                        <a class="carousel-control-next" href="#myCarousel4" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                        <span class="visually-hidden">Next</span></a>
+                    </div>
+                    <div class="card-body">
+                        <h4 id="card4" class="card-title">夏戀北海道</h5>
+                        <!-- <p class="card-text">英姿颯爽的太陽花在盛夏的艷陽下綻放…！</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var url = './db.json'
+			//抓網址參數
+			var strUrl = location.search;
+			var getPara, ParaVal;
+			var aryPara = [];
+			if (strUrl.indexOf("?") != -1) {
+				var getSearch = strUrl.split("?");
+				getPara = getSearch[1].split("&");
+				for (i = 0; i < getPara.length; i++) {
+					ParaVal = getPara[i].split("=");
+					aryPara.push(ParaVal[0]);
+					aryPara[ParaVal[0]] = ParaVal[1];
+				}
+				var time = aryPara["time"];
+				var type = aryPara["type"];
+				var style = aryPara["style"];
+				// alert("time："+time+"\ntype："+type+"\nstyle："+style)
+			}
+
+            // https://guahsu.io/2017/06/JavaScript-Duplicates-Array/
+			let getRepeatArray = function(arr1,arr2){
+				var arR = []
+				arR = arr1.concat(arr2)
+				var repeat = arR.filter(function(element, index, arr){
+					return arr.indexOf(element) !== index;
+				});
+				return repeat
+			}
+
+            let randomPick = function(data_filtered){
+                var str = '';
+                var arr = [];
+                var newArr = [];
+                for(i=0;i<4;i++){
+                    str = Math.floor(Math.random()*data_filtered.length);    
+                    for(j=0;j<arr.length;j++){
+                        // 刪除重複的亂數
+                        if(arr[j]==str){
+                            arr.splice(j,1);
+                            i--;
+                        }
+                    }     
+                    arr.push(str);             
+                }
+                for(i=0;i<4;i++){
+                    newArr[i] = data_filtered[arr[i]];
+                }
+                return newArr;
+            }
+
+            $.get(url, function(res) {
+                data = res
+				var data_filtered_time = data.filter(function(element, index, arr){       
+                    for(let i=0;i<data[index].time.length;i++){
+                        if(data[index].time[i] == time){
+                            return data[index].time[i] == time;
+                        }            
+                    }                             
+                });
+
+                var data_filtered_type = data.filter(function(element, index, arr){       
+                    for(let i=0;i<data[index].type.length;i++){
+                        if(data[index].type[i] == type){
+                            return data[index].type[i] == type;
+                        }            
+                    }                             
+                });
+
+                var data_filtered_style = data.filter(function(element, index, arr){       
+                    for(let i=0;i<data[index].style.length;i++){
+                        if(data[index].style[i] == style){
+                            return data[index].style[i] == style;
+                        }            
+                    }                             
+                });
+
+                // alert("1. "+data_filtered_time+"\n2. "+data_filtered_type+"\n3. "+data_filtered_style)
+                data_filtered = getRepeatArray(data_filtered_time, data_filtered_type)
+                data_filtered = getRepeatArray(data_filtered, data_filtered_style)
+                // alert(data_filtered.length)
+
+                data = randomPick(data_filtered)            
+                $('#card1').text(data[0].name)
+                $('#card1_img1').attr('src',`images/${data[0].primary_key}/1.jpg`)
+                $('#card1_img2').attr('src',`images/${data[0].primary_key}/2.jpg`)
+                $('#card2').text(data[1].name)
+                $('#card2_img1').attr('src',`images/${data[1].primary_key}/1.jpg`)
+                $('#card2_img2').attr('src',`images/${data[1].primary_key}/2.jpg`)
+                $('#card3').text(data[2].name)
+                $('#card3_img1').attr('src',`images/${data[2].primary_key}/1.jpg`)
+                $('#card3_img2').attr('src',`images/${data[2].primary_key}/2.jpg`)
+                $('#card4').text(data[3].name)
+                $('#card4_img1').attr('src',`images/${data[3].primary_key}/1.jpg`)
+                $('#card4_img2').attr('src',`images/${data[3].primary_key}/2.jpg`)
+            })               
+        </script>     
+    </body>
+</html>

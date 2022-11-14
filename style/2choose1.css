@@ -1,0 +1,71 @@
+body{
+    background-image: url(../images/background.jpg);
+}
+
+.wrapper{
+    margin-top: 100px;
+    width:100%;
+    /* border-style: solid;
+    border-color: #CA8EFF;
+    border-width: 3px; */
+}
+
+.toggledOne,
+.toggledAnother {
+    width: 50%;
+}
+
+.wrapper,
+.toggledOne,
+.toggledAnother {
+    height: 500px;
+}
+
+.toggledOne {
+    float: left;
+    background-color:#2894FF;
+}
+
+.toggledAnother {
+    float: right;
+    background-color:#FFDC35;
+}
+
+.picLeft,
+.picRight{
+    width: 100%;
+    height: 450px;
+}
+
+.storeLeft,
+.storeRight{
+    text-align:center;
+    font-size: xx-large;
+}
+
+.storeName{
+    text-align:center;
+    font-size: xx-large;
+}
+
+/* jquery輪播 */
+.slideshow {
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+    height: 550px;
+    width: 800px;
+}
+
+.slideshow img {
+    position: absolute;
+    top: 3%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+}
+
+.dialogImg{
+    width: 800px;
+    height: 520px;
+}

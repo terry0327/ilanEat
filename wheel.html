@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    
+    <!-- dialog -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+
+    <!-- 轉盤 -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="style/wheel.css"/>
+    <title>轉盤</title>
+  </head>
+  <body>
+    <div class="container">   
+        <div class="wheelBody">
+            
+        </div>
+        <div class="contentCon"></div>
+    </div>
+
+    <!-- dialog -->
+    <div id="dialog" width="900px" height="610px">
+        <!-- jquery輪播 https://eudora.cc/posts/26425/ -->
+        <div class="slideshow">
+            <img id="storeImg1" class="storeImg" src="images/tour2.jpg" alt=""/>
+            <img id="storeImg2" class="storeImg" src="images/tour3.jpg" alt=""/>
+        </div>
+        <b><div class="storeName">店家名稱</div></b>
+    </div>
+
+    <script>
+        let wheel = $('.wheelBody')
+        let contentCon = $('.contentCon')
+        let winBar = $('.winBar')
+        let length, preAngle
+        let starAngle = 0
+        let giftBox = []
+        let data = []
+        let url = './db.json'
+
+        let shuffle = function(a, b) {
+            let num = Math.random() > 0.5 ? -1 : 1
+            return num
+        }
+
+        let showGift = function(r) {
+            $('.pattern')
+                .eq(r)
+                .addClass('picked')
+            $('.content')
+                .eq(r)
+                .addClass('picked')
+            $('h2').text(`${data[r].text}!`)
+            $('.storeName').text(`${data[r].name}`)
+            $('#storeImg1').attr('src',`images/${data[r].primary_key}/1.jpg`)
+            $('#storeImg2').attr('src',`images/${data[r].primary_key}/2.jpg`)
+            winBar.fadeIn(300)
+        }
+
+        let showNum = function() {
+            $('.content').each(function() {
+                let index = $(this).index()
+                $(this)
+                    .find('span')
+                    .text(data[index].num)
+            })
+        }
+
+        let again = function(r) {
+            $('.pattern').removeClass('picked')
+            $('.content').removeClass('picked')
+            winBar.fadeOut(300)
+        }
+
+        let handRotate = function(gift, second) {
+            let goAngle = starAngle + 1440 + gift * preAngle - (starAngle % 360)
+            starAngle = goAngle
+            $('.hand').css({
+                transition: `${second}ms`,
+                transform: `rotate(${goAngle}deg)`,
+            })
+            setTimeout(function() {
+                showGift(gift)
+                showNum()
+                $('.hand').on('click', clickHandler)
+            }, second)
+        }
+
+        let clickHandler = function() {
+            $('.hand').off('click');
+            if (giftBox.length == 0) {
+                init()
+                $('.hand').on('click', clickHandler)
+            } else {
+                again()
+                let gift = giftBox.sort(shuffle).pop()
+                data[gift].num--
+                handRotate(gift, 3000)
+                setTimeout(function(gift){$("#dialog").dialog("open");}, 3000);               
+            }
+        }
+
+        let randomPick = function(data_filtered){
+            var str = '';
+            var arr = [];
+            var newArr = [];
+            for(i=0;i<6;i++){
+                str = Math.floor(Math.random()*data_filtered.length);    
+                for(j=0;j<arr.length;j++){
+                    // 刪除重複的亂數
+                    if(arr[j]==str){
+                        arr.splice(j,1);
+                        i--;
+                    }
+                }     
+                arr.push(str);             
+            }
+            for(i=0;i<6;i++){
+                newArr[i] = data_filtered[arr[i]];
+            }
+            return newArr;
+        }
+
+        //抓網址參數
+        var strUrl = location.search;
+        var getPara, ParaVal;
+        var aryPara = [];
+        if (strUrl.indexOf("?") != -1) {
+            var getSearch = strUrl.split("?");
+            getPara = getSearch[1].split("&");
+            for (i = 0; i < getPara.length; i++) {
+                ParaVal = getPara[i].split("=");
+                aryPara.push(ParaVal[0]);
+                aryPara[ParaVal[0]] = ParaVal[1];
+            }
+            var time = aryPara["time"];
+            var type = aryPara["type"];
+            var style = aryPara["style"];
+            // alert("time："+time+"\ntype："+type+"\nstyle："+style)
+        }
+
+        let getRepeatArray = function(arr1,arr2){
+            var arR = []
+            arR = arr1.concat(arr2)
+            var repeat = arR.filter(function(element, index, arr){
+                return arr.indexOf(element) !== index;
+            });
+            return repeat
+        }
+
+        let init = function() {
+            starAngle = 0
+            giftBox = []
+            winBar.hide()
+            wheel.html('<div class="hand"><p>PRESS</p><img src="./images/hand.svg" /></div>')
+            contentCon.html('')
+            $('.hand').css({
+                transition: 'unset',
+                transform: 'unset',
+            })
+            $.get(url, function(res) {
+                data = res
+                var data_filtered_time = data.filter(function(element, index, arr){       
+                    for(let i=0;i<data[index].time.length;i++){
+                        if(data[index].time[i] == time){
+                            return data[index].time[i] == time;
+                        }            
+                    }                             
+                });
+
+                var data_filtered_type = data.filter(function(element, index, arr){       
+                    for(let i=0;i<data[index].type.length;i++){
+                        if(data[index].type[i] == type){
+                            return data[index].type[i] == type;
+                        }            
+                    }                             
+                });
+
+                var data_filtered_style = data.filter(function(element, index, arr){       
+                    for(let i=0;i<data[index].style.length;i++){
+                        if(data[index].style[i] == style){
+                            return data[index].style[i] == style;
+                        }            
+                    }                             
+                });
+
+                // alert("1. "+data_filtered_time+"\n2. "+data_filtered_type+"\n3. "+data_filtered_style)
+                data_filtered = getRepeatArray(data_filtered_time, data_filtered_type)
+                data_filtered = getRepeatArray(data_filtered, data_filtered_style)
+                // alert(data_filtered.length)
+
+                data = randomPick(data_filtered)              
+                data.forEach((item, index) => {       
+                    preAngle = 360 / data.length
+                    let patternAngle = preAngle / -2 + index * preAngle
+                    let pattern = $('<div class="pattern"></div>')
+                    let inner = $('<div class="inner"></div>')
+                    let content = $(
+                        `<div class="content"><p>${item.name}</p></div>`
+                        // `<div class="content"><h3>${item.icon}</h3><p>${item.text}</p><span>${item.num}</span></div>`
+                    )
+
+                    pattern.css('transform', `rotate(${patternAngle}deg)`)
+                    inner.css('transform', `rotate(${preAngle}deg)`)
+                    content.css('transform', `rotate(${index * preAngle}deg)`)
+                    pattern.append(inner)
+                    wheel.append(pattern)
+                    contentCon.append(content)
+
+                    for (let i = 0; i < item.primary_key; i++) {
+                        giftBox.push(index)
+                    }
+                })
+            })
+            $('.hand').on('click', clickHandler)
+        }
+
+        init()
+
+        $('.btnGroup a').on('click', function() {
+            if ($(this).hasClass('to2017')) {
+                url = './db.json'
+                $(this)
+                    .addClass('active')
+                    .siblings()
+                    .removeClass('active')
+            } else if ($(this).hasClass('to2018')) {
+                url = './db2018.json'
+                $(this)
+                    .addClass('active')
+                    .siblings()
+                    .removeClass('active')
+            }
+            init()
+        })
+
+        // dialog
+        $(function() {
+            $("#dialog").dialog({
+                modal:true,
+                autoOpen: false,    
+                height:620,
+                width:900,             
+                show: {
+                    effect: "bounce",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "fade",
+                    duration: 1000
+                },
+                //點擊dialog以外區域退出
+                //   open: function(){
+                //     jQuery('.ui-widget-overlay').bind('click',function(){    
+                //         jQuery('#dialog').dialog('close');
+                //     })
+                //   }
+            });
+
+            $("#dialog").siblings('div.ui-dialog-titlebar').remove();    
+        });
+
+        //jquery輪播
+        $('.slideshow').each(function(){
+        
+            let slideImgs = $(this).find('img'),
+                slideImgsCount = slideImgs.length,
+                currentIndex = 0;
+            
+            slideImgs.eq(currentIndex).fadeIn();
+            
+            setInterval(showNextSlide, 3000);
+            
+            function showNextSlide(){
+                let nextIndex = (currentIndex + 1) % slideImgsCount;
+                console.log(nextIndex)
+                slideImgs.eq(currentIndex).fadeOut();
+                slideImgs.eq(nextIndex).fadeIn();
+                currentIndex = nextIndex;
+            }
+        })
+    </script>
+  </body>
+</html>

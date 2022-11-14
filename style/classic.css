@@ -1,0 +1,74 @@
+body{
+    width: 100%;
+    height: 100%;
+    /* background: #F4ECC0; */
+    background-image: url("../images/background.jpg");
+}
+
+.background{
+    width: 100%;
+    height: 100%;
+    
+}
+
+.titleBar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    /* background: #E0DECE; */
+
+    display: flex;
+    justify-content: center; /* 主軸對齊：類似水平對齊 */
+    align-items: center; /* 交錯軸對齊：類似垂直對齊 */
+}
+
+.item{
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    left: 0%;
+    top: 0%;
+}
+
+.item_pic{
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    left: 213px;
+    top: 174px;
+    background: rgb(101, 39, 235);
+}
+
+.item_name{
+    position: absolute;
+    width: 400px;
+    height: 80px;
+    left: 213px;
+    top: 474px;
+    background:  #948181;;
+
+    display: flex;
+    justify-content: center; /* 主軸對齊：類似水平對齊 */
+    align-items: center; /* 交錯軸對齊：類似垂直對齊 */
+}
+
+.container{
+    margin-top: 230px;
+}
+
+.card-title{
+    font-weight:bold;
+    display: flex;
+    justify-content: center; 
+}
+
+.card_img{
+    width: 400px;
+    height: 200px;
+}
+
+
+
+

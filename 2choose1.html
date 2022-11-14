@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>二選一</title>
+		<script src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+		<link rel="stylesheet" href="style/2choose1.css">
+
+		<!-- dialog -->
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+		<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+	</head>
+	<body>
+		<div class="wrapper">						
+			<div class="toggledOne">
+				<img class="picLeft" src="images/tour2.jpg">
+				<b><div class="storeLeft">蓁好家</div></b>
+			</div>
+			<div class="toggledAnother">
+				<img class="picRight" src="images/tour3.jpg">
+				<b><div class="storeRight">日誠</div></b>
+			</div>
+		</div>
+
+		<!-- dialog -->
+		<div id="dialog" width="900px" height="610px">
+			<!-- jquery輪播 https://eudora.cc/posts/26425/ -->
+			<div class="slideshow">
+				<img id="dialogImg1" class="dialogImg" src="images/tour2.jpg" alt=""/>
+				<img id="dialogImg2" class="dialogImg" src="images/tour3.jpg" alt=""/>
+			</div>
+			<b><div class="storeName">蓁好家</div></b>
+		</div>
+
+		<script>
+			let url = './db.json'
+			let arrayIndex = 1
+			let data = []
+
+			//抓網址參數
+			var strUrl = location.search;
+			var getPara, ParaVal;
+			var aryPara = [];
+			if (strUrl.indexOf("?") != -1) {
+				var getSearch = strUrl.split("?");
+				getPara = getSearch[1].split("&");
+				for (i = 0; i < getPara.length; i++) {
+					ParaVal = getPara[i].split("=");
+					aryPara.push(ParaVal[0]);
+					aryPara[ParaVal[0]] = ParaVal[1];
+				}
+				var time = aryPara["time"];
+				var type = aryPara["type"];
+				var style = aryPara["style"];
+				// alert("time："+time+"\ntype："+type+"\nstyle："+style)
+			}
+
+			let getRepeatArray = function(arr1,arr2){
+				var arR = []
+				arR = arr1.concat(arr2)
+				var repeat = arR.filter(function(element, index, arr){
+					return arr.indexOf(element) !== index;
+				});
+				return repeat
+			}
+
+			let randomPick = function(data_filtered){
+                var str = '';
+                var arr = [];
+                var newArr = [];
+                for(i=0;i<4;i++){
+                    str = Math.floor(Math.random()*data_filtered.length);    
+                    for(j=0;j<arr.length;j++){
+                        // 刪除重複的亂數
+                        if(arr[j]==str){
+                            arr.splice(j,1);
+                            i--;
+                        }
+                    }     
+                    arr.push(str);             
+                }
+                for(i=0;i<4;i++){
+                    newArr[i] = data_filtered[arr[i]];
+                }
+                return newArr;
+            }
+
+			let finalChoose = function(){
+				$('.toggledOne').click(function(){
+
+				})
+				$('.toggledAnother').click(function(){
+
+				})
+				endIndex = arrayIndex - 1
+				$('.storeName').text(data[endIndex].name)
+				$('#dialogImg1').attr('src',`images/${data[endIndex].primary_key}/1.jpg`)
+          		$('#dialogImg2').attr('src',`images/${data[endIndex].primary_key}/2.jpg`) 
+			}
+
+			$.get(url, function(res) {
+                data = res
+				var data_filtered_time = data.filter(function(element, index, arr){       
+                    for(let i=0;i<data[index].time.length;i++){
+                        if(data[index].time[i] == time){
+                            return data[index].time[i] == time;
+                        }            
+                    }                             
+                });
+
+                var data_filtered_type = data.filter(function(element, index, arr){       
+                    for(let i=0;i<data[index].type.length;i++){
+                        if(data[index].type[i] == type){
+                            return data[index].type[i] == type;
+                        }            
+                    }                             
+                });
+
+                var data_filtered_style = data.filter(function(element, index, arr){       
+                    for(let i=0;i<data[index].style.length;i++){
+                        if(data[index].style[i] == style){
+                            return data[index].style[i] == style;
+                        }            
+                    }                             
+                });
+
+                // alert("1. "+data_filtered_time+"\n2. "+data_filtered_type+"\n3. "+data_filtered_style)
+                data_filtered = getRepeatArray(data_filtered_time, data_filtered_type)
+                data_filtered = getRepeatArray(data_filtered, data_filtered_style)
+                // alert(data_filtered.length)
+
+                data = randomPick(data_filtered)  
+				$('.storeLeft').text(data[0].name)
+				$('.picLeft').attr('src',`images/${data[0].primary_key}/1.jpg`) 
+				$('.storeRight').text(data[1].name)
+				$('.picRight').attr('src',`images/${data[1].primary_key}/1.jpg`)
+			})
+
+			$('.toggledOne').click(function(){
+				$('.toggledAnother').animate({width:'toggle'},1000);
+				setTimeout(function(){
+					arrayIndex = arrayIndex + 1
+					if (arrayIndex>3){
+						let name = $('.storeLeft').text()
+						let img1 = $('.picLeft').attr('src')
+						// 將讀到的img路徑用split分成陣列arr，其中arr[1]就是需要的部分
+						let arr = img1.split('/')
+						$('.storeName').text(name)
+						$('#dialogImg1').attr('src',img1) 
+						$('#dialogImg2').attr('src',`images/${arr[1]}/2.jpg`)
+						$("#dialog").dialog("open");
+					}
+					else{						
+						$('.toggledAnother').css('float','right');
+						$('.picRight').attr('src',`images/${data[arrayIndex].primary_key}/1.jpg`);
+						$('.storeRight').text(`${data[arrayIndex].name}`);
+						$('.toggledAnother').animate({width:'toggle'},1000);
+					}									
+				}, 1000);  
+				// if (arrayIndex>5){
+				// 	$("#dialog").dialog("open");
+				// }				
+			});
+
+			$('.toggledAnother').click(function(){
+				$('.toggledOne').animate({width:'toggle'},1000);
+				setTimeout(function(){
+					arrayIndex = arrayIndex + 1
+					if (arrayIndex>3){
+						let name = $('.storeRight').text()
+						let img1 = $('.picRight').attr('src')
+						let arr = img1.split('/')
+						$('.storeName').text(name)
+						$('#dialogImg1').attr('src',img1)
+						$('#dialogImg2').attr('src',`images/${arr[1]}/2.jpg`)
+
+						$("#dialog").dialog("open");
+					}
+					else{
+						$('.toggledOne').css('float','left');
+						$('.picLeft').attr('src',`images/${data[arrayIndex].primary_key}/1.jpg`);
+						$('.storeLeft').text(`${data[arrayIndex].name}`);
+						$('.toggledOne').animate({width:'toggle'},1000);
+					}					
+				}, 1000); 				
+			});
+
+			// dialog
+			$(function() {
+				$("#dialog").dialog({
+					modal:true,
+					autoOpen: false,    
+					height:620,
+					width:900,             
+					show: {
+						effect: "bounce",
+						duration: 1000
+					},
+					hide: {
+						effect: "fade",
+						duration: 1000
+					},
+					//點擊dialog以外區域退出
+					//   open: function(){
+					//     jQuery('.ui-widget-overlay').bind('click',function(){    
+					//         jQuery('#dialog').dialog('close');
+					//     })
+					//   }
+				});
+				$("#dialog").siblings('div.ui-dialog-titlebar').remove();   
+			});
+
+			//jquery輪播
+			$('.slideshow').each(function(){   
+				let slideImgs = $(this).find('img'),
+					slideImgsCount = slideImgs.length,
+					currentIndex = 0;
+				
+				slideImgs.eq(currentIndex).fadeIn();
+				
+				setInterval(showNextSlide, 3000);
+				
+				function showNextSlide(){
+					let nextIndex = (currentIndex + 1) % slideImgsCount;
+					console.log(nextIndex)
+					slideImgs.eq(currentIndex).fadeOut();
+					slideImgs.eq(nextIndex).fadeIn();
+					currentIndex = nextIndex;
+				}
+			})
+		</script>
+	</body>
+</html>
